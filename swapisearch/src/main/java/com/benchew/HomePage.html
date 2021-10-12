@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>SWAPI Search</title>
+		<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+		<link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Merriweather+Sans&family=Poppins&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="jumbotron">
+				<div class="row">
+				  <div class="col-md-8 col-md-offset-3"><h1>Star Wars Character Search</h1></div>
+				</div>		
+			</div>
+			<form wicket:id="form" class="form-inline">
+				<div class="form-group">
+					<input wicket:id="searchName" type="text" class="form-control" placeholder="Character Name" autofocus="autofocus"> <a wicket:id="search" href="#" type="button" class="btn btn-primary"><span class="fas fa-search fa-lg"></span> Search</a>
+				</div>
+			</form>
+			<div id="results" wicket:id="results">
+				<p>Your search for "<span wicket:id="searchString" ></span>" returned <span wicket:id="count" ></span> <span wicket:id="resultString" ></span></p>							
+				<wicket:container wicket:id="people">
+					<div class="alert alert-info" role="alert">
+						<strong>Name: </strong><span wicket:id="name"></span><br/>
+						<strong>Birth Year: </strong><span wicket:id="birthYear"></span><br/>
+						<strong>Gender: </strong><span wicket:id="gender"></span><br/>
+						<strong>Height: </strong><span wicket:id="height"></span>cm<br/>		
+						<strong>Mass: </strong><span wicket:id="mass"></span>kg<br/>
+						<strong>Hair Color: </strong><span wicket:id="hairColor"></span><br/>
+						<strong>Eye Color: </strong><span wicket:id="eyeColor"></span><br/>
+						<strong>Skin Color: </strong><span wicket:id="skinColor"></span><br/>
+						<strong>Homeworld: </strong><span wicket:id="homeworld"></span><br/>
+						<strong>Films: </strong><br/>
+						<div wicket:id="films">
+							<ul>
+								<li><span wicket:id="filmTitle"></span></li>
+							</ul>
+						</div>
+						<strong>Species: </strong><br/>
+						<div wicket:id="species">
+							<ul>
+								<li><span wicket:id="speciesName"></span></li>
+							</ul>
+						</div>
+						<strong>Starships: </strong><br/>
+						<div wicket:id="starships">
+							<ul>
+								<li><span wicket:id="starshipName"></span></li>
+							</ul>
+						</div>	
+						<strong>Vehicles: </strong><br/>
+						<div wicket:id="vehicles">
+							<ul>
+								<li><span wicket:id="vehicleName"></span></li>
+							</ul>
+						</div>											
+					</div>
+				</wicket:container>
+			</div>
+		</div>		
+		<script type="text/javascript" src="background.js"></script>	
+	</body>
+</html>
