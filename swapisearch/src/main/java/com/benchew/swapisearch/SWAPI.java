@@ -51,7 +51,7 @@ public class SWAPI {
 		Integer count;
 		String next;
 		String previous;
-		ArrayList<People> results; //urls
+		ArrayList<People> results;
 	}
 	
 	class People implements Serializable {
