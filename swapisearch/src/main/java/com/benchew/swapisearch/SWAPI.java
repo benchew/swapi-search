@@ -1,93 +1,49 @@
 package com.benchew.swapisearch;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
+import com.benchew.swapisearch.utils.AsyncHttpClient;
+import com.benchew.swapisearch.utils.SWAPISearchUtils;
 import com.google.gson.Gson;
 
 public class SWAPI {
 	static final private String SWAPI_BASE_URL = "https://swapi.dev/api";
 	static final private Gson gson = new Gson();
-	static final private HttpClient httpClient = HttpClient.newBuilder()
-            .version(HttpClient.Version.HTTP_2)
-            .connectTimeout(Duration.ofSeconds(5))
-            .build();
-
-	String sendRequest(String url) {
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(url))
-				.GET()
-				.build();				
-		CompletableFuture<HttpResponse<String>> response = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-		String body = null;
-		Integer statusCode = null; 
-		
-		try {
-			body = response.thenApply(HttpResponse::body).get(10, TimeUnit.SECONDS);
-			 statusCode = response.thenApply(HttpResponse::statusCode).get(10, TimeUnit.SECONDS); 
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
-			e.printStackTrace();
-		}
-
-		if (statusCode != 200) {
-            throw new RuntimeException("SWAPI Error: HTTP Status Code: " + statusCode + " for URL: " + request.uri());
-        }
-		
-		return body;
-	}
+	static final private AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 	
 	public SearchResult peopleSearch(String searchString) {
-		String url = SWAPI_BASE_URL + "/people/?search=" + urlEncode(searchString);
-		String searchResponse = sendRequest(url);		
+		String url = SWAPI_BASE_URL + "/people/?search=" + SWAPISearchUtils.urlEncode(searchString);
+		String searchResponse = asyncHttpClient.sendRequest(url);		
 		SearchResult results = gson.fromJson(searchResponse, SearchResult.class); 
 		
 		for (People aPeople : results.results) {			
-			String homeworldResponse = sendRequest(aPeople.homeworld);
+			String homeworldResponse = asyncHttpClient.sendRequest(aPeople.homeworld);
 			aPeople.homeworldPlanet = gson.fromJson(homeworldResponse, Planet.class);
 			
 			for (String aFilmUrl : aPeople.films) {
-				String filmResponse = sendRequest(aFilmUrl);
+				String filmResponse = asyncHttpClient.sendRequest(aFilmUrl);
 				aPeople.getFilmObjects().add(gson.fromJson(filmResponse, Film.class)); 
 			}
 			
 			for (String aSpeciesUrl : aPeople.species) {
-				String speciesResponse = sendRequest(aSpeciesUrl);
+				String speciesResponse = asyncHttpClient.sendRequest(aSpeciesUrl);
 				aPeople.getSpeciesObjects().add(gson.fromJson(speciesResponse, Species.class)); 
 			}
 			
 			for (String aStarshipUrl : aPeople.starships) {
-				String starshipResponse = sendRequest(aStarshipUrl);
+				String starshipResponse = asyncHttpClient.sendRequest(aStarshipUrl);
 				aPeople.getStarshipObjects().add(gson.fromJson(starshipResponse, Starship.class)); 
 			}
 			
 			for (String aVehicleUrl : aPeople.vehicles) {
-				String vehicleResponse = sendRequest(aVehicleUrl);
+				String vehicleResponse = asyncHttpClient.sendRequest(aVehicleUrl);
 				aPeople.getVehicleObjects().add(gson.fromJson(vehicleResponse, Vehicle.class)); 
 			}
 		}
 		
 		return results;
 	}
-		
-    private static String urlEncode(String aString) {
-        try {
-            return URLEncoder.encode(aString, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getCause());
-        }
-    }
 	
 	class SearchResult implements Serializable {
 		private static final long serialVersionUID = 1L;
