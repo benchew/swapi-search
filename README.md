@@ -1,4 +1,4 @@
 # swapi-search
-This is a fun project that makes use of the Star Wars API to search for star wars characters. 
+This is a fun project that makes use of the [Star Wars API](https://swapi.dev) to search for Star Wars characters. 
 
-It's written Java using Apache Wicket 9.5. You can download and run it in Eclipse. The default application URL is http://localhost:8080.
+It's written Java using [Apache Wicket](https://wicket.apache.org) v9.5. You can download and run it in Eclipse. The default application URL is http://localhost:8080.
