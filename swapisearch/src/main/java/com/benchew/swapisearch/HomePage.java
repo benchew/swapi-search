@@ -1,4 +1,4 @@
-package com.benchew;
+package com.benchew.swapisearch;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -11,11 +11,11 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import com.benchew.SWAPI.Film;
-import com.benchew.SWAPI.People;
-import com.benchew.SWAPI.Species;
-import com.benchew.SWAPI.Starship;
-import com.benchew.SWAPI.Vehicle;
+import com.benchew.swapisearch.SWAPI.Film;
+import com.benchew.swapisearch.SWAPI.People;
+import com.benchew.swapisearch.SWAPI.Species;
+import com.benchew.swapisearch.SWAPI.Starship;
+import com.benchew.swapisearch.SWAPI.Vehicle;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;

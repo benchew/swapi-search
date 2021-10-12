@@ -4,6 +4,9 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.benchew.swapisearch.HomePage;
+import com.benchew.swapisearch.WicketApplication;
+
 /**
  * Simple test using the WicketTester
  */

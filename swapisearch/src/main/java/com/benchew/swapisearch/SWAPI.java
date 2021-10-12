@@ -1,4 +1,4 @@
-package com.benchew;
+package com.benchew.swapisearch;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
